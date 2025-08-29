@@ -1,79 +1,113 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> Cat Videos - Watch Now</title>
-  <style>
-    * { box-sizing: border-box; padding: 0; margin: 0; }
-    body {
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-    }
-    .player {
-      position: relative;
-      width: 90%;
-      max-width: 480px;
-      background: #111;
-      border: 3px solid red;
-      padding: 10px;
-      border-radius: 12px;
-    }
-    .player img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .btn {
-      margin-top: 15px;
-      background: red;
-      color: white;
-      padding: 12px 25px;
-      font-size: 1.2em;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: darkred;
-    }
-    .warning {
-      margin-bottom: 15px;
-      color: #ff3c3c;
-      font-size: 1.1em;
-    }
-  </style>
-  <script>
-    setTimeout(function() {
-      window.location.href = "https://cats-cute-moment.pages.dev/";
-    }, 10000); // Auto-redirect after 10 seconds
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continue to Watch</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0f0f0f, #3b3b3b); color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; text-align: center; flex-direction: column; }
+        .container { text-align: center; }
+        .instruction { font-size: 1.5rem; color: #ecf0f1; margin-bottom: 20px; font-weight: 600; }
+        .logo { width: 180px; margin-bottom: 30px; opacity: 0; animation: fadeIn 2s ease-in-out forwards; }
+        .button { background: linear-gradient(145deg, #1abc9c, #16a085); color: #fff; padding: 15px 40px; font-size: 1.2rem; font-weight: 600; border-radius: 50px; text-decoration: none; transition: 0.3s; cursor: pointer; }
+        .button:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); }
+        #loader-wrapper { margin: 20px auto 0; width: 150px; height: 150px; position: relative; display: none; }
+        .loader-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 5px solid transparent;
+        }
+        .circle1 {
+            width: 150px;
+            height: 150px;
+            border-top-color: #1abc9c;
+            animation: spin-clockwise 2s linear infinite;
+        }
+        .circle2 {
+            width: 120px;
+            height: 120px;
+            top: 15px;
+            left: 15px;
+            border-top-color: #e74c3c;
+            animation: spin-counterclockwise 1.5s linear infinite;
+        }
+        .circle3 {
+            width: 90px;
+            height: 90px;
+            top: 30px;
+            left: 30px;
+            border-top-color: #f1c40f;
+            animation: spin-clockwise 1s linear infinite;
+        }
+        @keyframes spin-clockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-counterclockwise {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .progress { font-size: 1.5rem; margin-top: 10px; color: #b3b3b3; display: none; }
+        .please-wait { font-size: 1.3rem; color: #b3b3b3; font-weight: 600; margin-top: 20px; display: none; }
+    </style>
+    
 </head>
 <body>
-<script type="text/javascript">
-	atOptions = {
-		'key' : '55899f4c6d7c11443f7e1db79fe1f20b',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/55899f4c6d7c11443f7e1db79fe1f20b/invoke.js"></script>
-  <div class="warning">Live Sports Cate. Viewer cats-cute-moment.</div>
-  <div class="player">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQl3_fbyN6nylNXIQ3N0L8Un_qTqVQ2VFRw&s" alt="Fake Player">
-  </div>
-  <button class="btn" onclick="window.location.href='https://www.effectivecpmrate.com/itwrrgxz?key=dd293b6fd80244abff767e53a06d94f7'">
-    ▶️ Watch Now
-  </button>
+    <div class="container">
+        <div class="instruction" id="instructionText">CLICK CONTINUE WATCH FULL</div>
+        <button class="button" id="continueButton" onclick="continueWatching()">Continue</button>
+        <div class="please-wait" id="pleaseWaitText">You will be redirected soon. Please wait...</div>
+        <div id="loader-wrapper">
+            <div class="loader-circle circle1"></div>
+            <div class="loader-circle circle2"></div>
+            <div class="loader-circle circle3"></div>
+        </div>
+        <div class="progress" id="progress">0%</div>
+    </div>
+
+    <script>
+        function continueWatching() {
+            // Membuka tab baru secara tersembunyi
+          
+            // Hilangkan tombol hijau dan teks instruksi
+            document.getElementById('instructionText').style.display = 'none';
+            document.getElementById('continueButton').style.display = 'none';
+
+            // Tampilkan loading dan teks "Please wait"
+            document.getElementById('pleaseWaitText').style.display = 'block';
+            document.getElementById('loader-wrapper').style.display = 'block';
+            document.getElementById('progress').style.display = 'block';
+
+            // Simulasi progress bar dari 1 hingga 100
+            let progress = 0;
+            const progressElement = document.getElementById('progress');
+            const intervalTime = 50; // 50ms interval
+            const totalDuration = 2000; // 5 detik
+            const increment = 100 / (totalDuration / intervalTime);
+
+            const progressInterval = setInterval(() => {
+                if (progress < 100) {
+                    progress += increment;
+                    progressElement.textContent = `${Math.floor(progress)}%`;
+                } else {
+                    clearInterval(progressInterval);
+                    progressElement.textContent = '100%'; // Pastikan progress mencapai 100%
+                }
+            }, intervalTime);
+
+            // Redirect setelah 5 detik
+            setTimeout(() => {
+                const currentPath = window.location.pathname; // Dapatkan path dari URL saat ini
+                const redirectUrl = `https://offenceperiod.com/ayu2daei?key=6a72d60ec259358d1cad45b3a47e4973${currentPath}`; // Tambahkan path ke domain tujuan
+                window.location.href = redirectUrl;
+            }, totalDuration);
+        }
+    </script>
+    
 </body>
 </html>
